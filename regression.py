@@ -13,7 +13,7 @@ y = data["charges"].values
 m = 0   # slope
 b = 0   # intercept
 alpha = 0.0001  # learning rate
-epochs = 1000  # number of iterations
+epochs = 100  # number of iterations
 
 print("Starting values:")
 print("m =", m)
@@ -30,7 +30,8 @@ def cost(x, y):
 
 # gradient decent 
 all_costs = []
-shots = []
+shots = {}
+print("Type of shots:", type(shots))
 
 for i in range(epochs):
     y_pred = predict(x)
@@ -52,10 +53,10 @@ for i in range(epochs):
 print("\nFinal values:")
 print("m =", m)
 print("b =", b)
-print("Final cost =", cost_history[-1])
+print("Final cost =", all_costs[-1])
 
 # cost vs time plot 
-plt.plot(range(epochs), cost_history)
+plt.plot(range(epochs), all_costs)
 plt.xlabel("Epoch")
 plt.ylabel("Cost")
 plt.title("Cost over iterations")
@@ -64,7 +65,7 @@ plt.show()
 # plot data... there's a lot, also the regression lines
 plt.scatter(x, y, label="Data", color="blue")
 
-for i, (m_snap, b_snap) in snapshots.items():
+for i, (m_snap, b_snap) in shots.items():
     plt.plot(x, m_snap * x + b_snap, label=f"Epoch {i}")
 
 plt.title("How the line changes during training")
